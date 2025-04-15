@@ -45,8 +45,13 @@ export default function Home() {
 
       setMessage("URL shortened successfully!");
       setShortLink(`https://cs391-url-shortener.vercel.app/${alias}`);
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error: unknown) {
+      // Narrow down the error type
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unexpected error occurred.");
+      }
     }
   };
 
