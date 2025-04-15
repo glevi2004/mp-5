@@ -44,7 +44,7 @@ export default function Home() {
       }
 
       setMessage("URL shortened successfully!");
-      setShortLink(`https://cs391-url-shortener.vercel.app/${alias}`);
+      setShortLink(`https://mp-5-nu.vercel.app/${alias}`);
     } catch (error: unknown) {
       // Narrow down the error type
       if (error instanceof Error) {
@@ -153,7 +153,7 @@ export default function Home() {
                 variant="body2"
                 sx={{ marginRight: 1, color: "text.secondary" }}
               >
-                https://cs391-url-shortener.vercel.app/
+                mp-5-nu.vercel.app
               </Typography>
             ),
           }}
