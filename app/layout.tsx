@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { AppBar, Toolbar, Typography } from "@mui/material";
 import styles from "./page.module.css";
+import Nav from "@/components/Nav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,20 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={styles.appBackground}>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <AppBar
-          position="static"
-          sx={{
-            backgroundColor: "#2e7d32",
-            color: "#ffffff",
-          }}
-        >
-          <Toolbar variant="dense">
-            {/* App title */}
-            <Typography variant="h6" color="inherit" component="div">
-              CS391 - URL Shortener
-            </Typography>
-          </Toolbar>
-        </AppBar>
+        <Nav />
         {children}
       </body>
     </html>
