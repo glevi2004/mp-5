@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 // Define the props interface including both `params` and `searchParams`, because before had "does not satisfy the contraint "PageProp" error in deployment
 interface RedirectPageProps {
   params: Promise<{ alias: string }>;
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export default async function RedirectPage(props: RedirectPageProps) {
