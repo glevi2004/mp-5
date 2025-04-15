@@ -4,19 +4,19 @@ import { notFound } from "next/navigation";
 
 // Define the props interface including both `params` and `searchParams`, because before had "does not satisfy the contraint "PageProp" error in deployment
 interface RedirectPageProps {
-  params: { alias: string } | Promise<{ alias: string }>;
+  params: Promise<{ alias: string }>;
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
 export default async function RedirectPage(props: RedirectPageProps) {
-  // Destructure inside the function body
-  const params = await props.params;
+  // Await the params to get the alias value.
+  const { alias } = await props.params;
 
   // Connect to MongoDB
   const db = await connectToDB();
 
   // Try to find the alias in the database
-  const record = await db.collection("alias").findOne({ alias: params.alias });
+  const record = await db.collection("alias").findOne({ alias });
 
   if (!record) {
     // If alias not found, show a 404 message
@@ -26,9 +26,7 @@ export default async function RedirectPage(props: RedirectPageProps) {
   }
 
   // Increment click count
-  await db
-    .collection("alias")
-    .updateOne({ alias: params.alias }, { $inc: { clicks: 1 } });
+  await db.collection("alias").updateOne({ alias }, { $inc: { clicks: 1 } });
 
   // Redirect to the original long URL
 
