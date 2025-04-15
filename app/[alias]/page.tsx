@@ -4,13 +4,13 @@ import { notFound } from "next/navigation";
 
 // Define the props interface including both `params` and `searchParams`, because before had "does not satisfy the contraint "PageProp" error in deployment
 interface RedirectPageProps {
-  params: { alias: string };
+  params: { alias: string } | Promise<{ alias: string }>;
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
 export default async function RedirectPage(props: RedirectPageProps) {
   // Destructure inside the function body
-  const { params } = props;
+  const params = await props.params;
 
   // Connect to MongoDB
   const db = await connectToDB();
