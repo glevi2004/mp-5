@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
-import LinkIcon from "@mui/icons-material/Link"; // Import LinkIcon
+import { AppBar, Toolbar, Typography } from "@mui/material";
 import styles from "./page.module.css";
 
 const geistSans = Geist({
