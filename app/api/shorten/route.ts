@@ -44,12 +44,15 @@ export async function POST(req: Request) {
       { message: "URL shortened successfully!" },
       { status: 201 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     // 500 status: something went wrong in the server
+    // Narrow down error type (before was using any and had deployment issues
+    if (error instanceof Error) {
+      return NextResponse.json({ message: error.message }, { status: 500 });
+    }
+    // Handle unexpected error types
     return NextResponse.json(
-      {
-        message: error.message || "Internal Server Error",
-      },
+      { message: "An unexpected error occurred" },
       { status: 500 }
     );
   }
