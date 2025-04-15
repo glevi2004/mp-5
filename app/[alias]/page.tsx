@@ -9,8 +9,9 @@ interface RedirectPageProps {
 }
 
 export default async function RedirectPage(props: RedirectPageProps) {
+  // Destructure inside the function body
   const { params } = props;
-  const { alias } = params;
+
   // Connect to MongoDB
   const db = await connectToDB();
 
