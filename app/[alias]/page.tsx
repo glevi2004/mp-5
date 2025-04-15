@@ -8,7 +8,9 @@ interface RedirectPageProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export default async function RedirectPage({ params }: RedirectPageProps) {
+export default async function RedirectPage(props: RedirectPageProps) {
+  const { params } = props;
+  const { alias } = params;
   // Connect to MongoDB
   const db = await connectToDB();
 
