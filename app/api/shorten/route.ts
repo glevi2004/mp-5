@@ -16,6 +16,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Missing fields" }, { status: 400 });
     }
 
+    // Validate the URL
+    try {
+      new URL(url); // Throws an error if
+    } catch {
+      return NextResponse.json({ message: "Invalid URL." }, { status: 400 });
+    }
+
     // Connect to the database
     const db = await connectToDB();
 
