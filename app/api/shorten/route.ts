@@ -52,6 +52,7 @@ export async function POST(req: Request) {
       const hostname = parsedUrl.hostname;
       await dnsLookup(hostname);
     } catch (dnsError) {
+      console.error("DNS lookup failed:", dnsError);
       return NextResponse.json(
         { message: "Domain does not exist or is not reachable" },
         { status: 400 }
