@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
 import { connectToDB } from "@/lib/mongodb";
+import dns from "dns";
+import { promisify } from "util";
+
+// Promisify dns.lookup for async/await usage
+const dnsLookup = promisify(dns.lookup);
 
 /**
  * Handles POST requests to create a shortened URL alias.
@@ -16,11 +21,41 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Missing fields" }, { status: 400 });
     }
 
+    // Check if URL is empty after trimming
+    if (url.trim() === "") {
+      return NextResponse.json(
+        { message: "URL cannot be empty" },
+        { status: 400 }
+      );
+    }
+
     // Validate the URL
     try {
-      new URL(url); // Throws an error if
+      new URL(url); // Throws an error if any
     } catch {
       return NextResponse.json({ message: "Invalid URL." }, { status: 400 });
+    }
+
+    // Validate URL format
+    let parsedUrl;
+    try {
+      parsedUrl = new URL(url);
+    } catch {
+      return NextResponse.json(
+        { message: "Invalid URL format" },
+        { status: 400 }
+      );
+    }
+
+    // Validate that the domain exists using DNS lookup
+    try {
+      const hostname = parsedUrl.hostname;
+      await dnsLookup(hostname);
+    } catch (dnsError) {
+      return NextResponse.json(
+        { message: "Domain does not exist or is not reachable" },
+        { status: 400 }
+      );
     }
 
     // Connect to the database
