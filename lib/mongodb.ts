@@ -8,7 +8,7 @@ if (!uri) {
   );
 }
 
-// Optional config object for MongoClient
+// config object for MongoClient
 const options = {};
 
 // Singleton instance of MongoClient
@@ -27,7 +27,7 @@ async function getMongoClient(): Promise<MongoClient> {
 // Helper to connect to MongoDB and return the "mp-5" database
 export async function connectToDB() {
   const client = await getMongoClient();
-  return client.db("mp-5"); // Replace "mp-5" with your database name
+  return client.db("mp-5");
 }
 
 export default getMongoClient;
